@@ -44,7 +44,7 @@ export const ReportsView: React.FC = () => {
         </style>
       </head>
       <body>
-        <div class="title">Shobuj Bangla Agro Farm Limited - ${sheetTitle}</div>
+        <div class="title">Ahmadun Agro (আহমাদুন এগ্রো) - ${sheetTitle}</div>
         <div>Generated Date: ${new Date().toISOString().slice(0, 10)} | Currency: BDT (৳)</div>
         <br/>
         <table>
@@ -81,7 +81,7 @@ export const ReportsView: React.FC = () => {
         ['Total Disbursed Investor Returns', globalFinancials.totalProfitDistributed],
         ['Available Bank / Cash Liquidity', globalFinancials.cashBalance],
       ];
-      exportExcel('Shobuj_Bangla_Financial_Statement', 'Executive Financials', headers, rows);
+      exportExcel('Ahmadun_Agro_Financial_Statement', 'Executive Financials', headers, rows);
     } else if (activeReportTab === 'sectors') {
       const headers = ['Sector Name', 'Sector Code', 'Land Area', 'Raised Capital (BDT)', 'Gross Sales (BDT)', 'Operating Cost (BDT)', 'Net Profit (BDT)', 'Profit Margin (%)'];
       const rows = globalFinancials.sectorBreakdown.map((s) => [
@@ -94,7 +94,7 @@ export const ReportsView: React.FC = () => {
         s.netProfit,
         s.profitMarginPercent.toFixed(2),
       ]);
-      exportExcel('Shobuj_Bangla_Sector_Performance', 'Sector Breakdown', headers, rows);
+      exportExcel('Ahmadun_Agro_Sector_Performance', 'Sector Breakdown', headers, rows);
     } else if (activeReportTab === 'investors') {
       const headers = ['Investor Name', 'Phone Number', 'NID / Passport', 'Total Invested (BDT)', 'Disbursed Profit (BDT)', 'Account Status'];
       const rows = db.investors.map((inv) => {
@@ -104,7 +104,7 @@ export const ReportsView: React.FC = () => {
         const totalPaid = invPayouts.reduce((sum, p) => sum + p.paidAmount, 0);
         return [inv.name, inv.phone, inv.nidPassport || inv.nid || '—', totalInv, totalPaid, inv.status];
       });
-      exportExcel('Shobuj_Bangla_Investor_Ledger', 'Investor Ledger', headers, rows);
+      exportExcel('Ahmadun_Agro_Investor_Ledger', 'Investor Ledger', headers, rows);
     } else {
       const headers = ['Date', 'Sector', 'Operations Conducted', 'Yield / Harvest Volume', 'Feed Consumed (Kg)', 'Labor Workers', 'Mortality Incidents'];
       const rows = db.operations.map((op) => {
@@ -113,7 +113,7 @@ export const ReportsView: React.FC = () => {
         const production = op.productionDetails || (op.productionQty ? `${op.productionQty} ${op.productionUnit || 'units'}` : 'Normal');
         return [op.date, sec?.name || 'Sector', activity, production, op.feedConsumedKg, op.laborCount, op.mortalityCount];
       });
-      exportExcel('Shobuj_Bangla_Farm_Operations_Log', 'Operations Log', headers, rows);
+      exportExcel('Ahmadun_Agro_Farm_Operations_Log', 'Operations Log', headers, rows);
     }
   };
 
@@ -492,12 +492,20 @@ export const ReportsView: React.FC = () => {
           <div className="bg-white rounded-2xl max-w-4xl w-full p-8 shadow-2xl border border-slate-200 space-y-6">
             <div className="flex justify-between items-start border-b border-slate-200 pb-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-emerald-800 text-white rounded-xl flex items-center justify-center font-bold text-xl shadow-xs">
-                  SB
+                <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center p-1 shadow-xs border border-emerald-200">
+                  <img
+                    src="/logo.png"
+                    alt="Ahmadun Agro Logo"
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-contain"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).src = '/logo.svg';
+                    }}
+                  />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-slate-900">Shobuj Bangla Agro Farm Limited</h2>
-                  <p className="text-xs text-slate-500">Govt. Reg # AGRO-BD-2024-8891 | Gazipur & Sylhet, Bangladesh</p>
+                  <h2 className="text-xl font-bold text-slate-900">Ahmadun Agro · আহমাদুন এগ্রো</h2>
+                  <p className="text-xs text-slate-500">Govt. Reg # AGRO-BD-2024-8891 | Gazipur & Kishoreganj Haor Belt, Bangladesh</p>
                 </div>
               </div>
 

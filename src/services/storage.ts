@@ -38,7 +38,7 @@ import {
   initialSettings
 } from './mockData';
 
-const STORAGE_KEY = 'shobuj_bangla_agro_db_v1';
+const STORAGE_KEY = 'ahmadun_agro_db_v2';
 
 export interface AppDatabase {
   users: User[];
@@ -86,7 +86,14 @@ export function loadDatabase(): AppDatabase {
         customModules: parsed.customModules || initialCustomModules,
         widgets: widgetList,
         dashboardWidgets: widgetList,
-        settings: parsed.settings || initialSettings,
+        settings: parsed.settings 
+          ? { 
+              ...parsed.settings, 
+              farmName: parsed.settings.farmName === 'Shobuj Bangla Integrated Agro Farm Ltd.' ? 'Ahmadun Agro' : parsed.settings.farmName || 'Ahmadun Agro',
+              farmNameBn: parsed.settings.farmNameBn === 'সবুজ বাংলা সমন্বিত এগ্রো ফার্ম লিমিটেড' ? 'আহমাদুন এগ্রো' : parsed.settings.farmNameBn || 'আহমাদুন এগ্রো',
+              logoText: 'AHMADUN AGRO'
+            } 
+          : initialSettings,
       };
     }
   } catch (err) {

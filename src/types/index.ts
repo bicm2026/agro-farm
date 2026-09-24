@@ -97,6 +97,19 @@ export interface BankDetails {
   nagadNumber?: string;
 }
 
+export interface InvestorSettlement {
+  settledAt: string;
+  capitalRefunded: number;
+  pendingProfitPaid: number;
+  deductionAmount?: number;
+  netSettledAmount: number;
+  paymentMethod: PaymentMethod | string;
+  transactionRef?: string;
+  voucherNo?: string;
+  notes?: string;
+  processedByName?: string;
+}
+
 export interface Investor {
   id: string;
   userId?: string;
@@ -115,9 +128,10 @@ export interface Investor {
   mobileBankingDetails?: any;
   nomineeName?: string;
   nomineeRelation?: string;
-  status: 'active' | 'inactive' | 'suspended';
+  status: 'active' | 'inactive' | 'suspended' | 'closed';
   avatar?: string;
   notes?: string;
+  settlement?: InvestorSettlement;
 }
 
 export type ProfitCalculationType = 
@@ -126,7 +140,7 @@ export type ProfitCalculationType =
   | 'sector_equity_ratio' 
   | 'custom_agreement';
 
-export type InvestmentStatus = 'pending' | 'active' | 'completed' | 'withdrawn' | 'suspended';
+export type InvestmentStatus = 'pending' | 'active' | 'completed' | 'withdrawn' | 'suspended' | 'closed';
 
 export interface Investment {
   id: string;

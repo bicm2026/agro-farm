@@ -32,7 +32,9 @@ const AppContent: React.FC = () => {
     setCurrentUser,
     db,
     notificationMessage, 
-    language 
+    language,
+    isLoggedIn,
+    logout
   } = useApp();
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isDesktopSidebarOpen, setIsDesktopSidebarOpen] = useState(true);
@@ -45,42 +47,46 @@ const AppContent: React.FC = () => {
     }
   };
 
-  const isPublicSite = activeTab === 'public' || activeTab === 'website';
+  const isPublicSite = !isLoggedIn || activeTab === 'public' || activeTab === 'website';
 
   // Role Permissions Check
   const isInvestorOnly = currentUser.role === 'investor';
   const adminOnlyTabs = ['investors', 'investments', 'accounting', 'moduleBuilder', 'dashboardBuilder', 'auditTrail', 'auditLogs', 'settings'];
-  const isRestrictedForCurrent = isInvestorOnly && adminOnlyTabs.includes(activeTab);
+  const isRestrictedForCurrent = isLoggedIn && isInvestorOnly && adminOnlyTabs.includes(activeTab);
 
   // Render view component
   const renderActiveView = () => {
+    if (!isLoggedIn) {
+      return <PublicWebsite />;
+    }
+
     if (isRestrictedForCurrent) {
       return (
         <div className="max-w-2xl mx-auto my-12 p-8 bg-white rounded-2xl border border-slate-200 shadow-sm text-center space-y-4">
           <div className="w-12 h-12 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center mx-auto">
             <ShieldAlert className="w-6 h-6" />
           </div>
-          <h2 className="text-lg font-bold text-slate-900">Restricted Management Area</h2>
+          <h2 className="text-lg font-bold text-slate-900">
+            {language === 'bn' ? 'সংরক্ষিত ব্যবস্থাপনা এলাকা' : 'Restricted Management Area'}
+          </h2>
           <p className="text-xs text-slate-600 max-w-md mx-auto">
-            You are currently signed in as an <strong>Investor ({currentUser.name})</strong>. 
-            Investor accounts have direct access to their personal <strong>Investor Portal</strong>, <strong>Farm Sectors</strong>, <strong>Reports</strong>, and <strong>Legal Documents</strong>.
+            {language === 'bn'
+              ? `আপনি বর্তমানে বিনিয়োগকারী হিসেবে লগইন আছেন (${currentUser.name})। আপনার শুধুমাত্র ব্যক্তিগত ইনভেস্টর পোর্টাল, ফার্ম সেক্টর এবং প্রজেক্ট তথ্যে অ্যাক্সেস রয়েছে।`
+              : `You are signed in as an Investor (${currentUser.name}). You have access to your personal Investor Portal, Farm Sectors, and Legal Documents.`}
           </p>
           <div className="pt-3 flex flex-wrap justify-center gap-3">
             <button
               onClick={() => setActiveTab('investorPortal')}
               className="px-4 py-2 text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 rounded-lg shadow-xs transition-colors flex items-center gap-1.5"
             >
-              <span>Go to My Investor Portal</span>
+              <span>{language === 'bn' ? 'আমার ইনভেস্টর পোর্টালে যান' : 'Go to My Investor Portal'}</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
             <button
-              onClick={() => {
-                setCurrentUser(db.users[0]);
-                setActiveTab('dashboard');
-              }}
+              onClick={logout}
               className="px-4 py-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors"
             >
-              Switch Role to Super Admin / Accountant
+              {language === 'bn' ? 'লগআউট করুন' : 'Sign Out'}
             </button>
           </div>
         </div>
@@ -177,7 +183,7 @@ const AppContent: React.FC = () => {
 
       {/* Footer bar */}
       <footer className="bg-white border-t border-slate-200 py-3 text-center text-[11px] text-slate-500">
-        <span>© {new Date().getFullYear()} Shobuj Bangla Agro Farm PLC. All Rights Reserved. Reg: TRAD/DSCC/041289/2024 · Gazipur, Bangladesh</span>
+        <span>© {new Date().getFullYear()} Ahmadun Agro (আহমাদুন এগ্রো). All Rights Reserved. Reg: TRAD/DSCC/041289/2024 · Gazipur, Bangladesh</span>
       </footer>
 
     </div>

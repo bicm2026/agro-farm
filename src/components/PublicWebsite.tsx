@@ -19,7 +19,18 @@ import {
 } from 'lucide-react';
 
 export const PublicWebsite: React.FC = () => {
-  const { db, language, t, setActiveTab, setSelectedSectorId, globalFinancials, showToast } = useApp();
+  const { 
+    db, 
+    currentUser,
+    language, 
+    t, 
+    setActiveTab, 
+    setSelectedSectorId, 
+    globalFinancials, 
+    showToast,
+    isLoggedIn,
+    setIsLoginModalOpen
+  } = useApp();
   const [selectedGallerySector, setSelectedGallerySector] = useState<string>('all');
   const [contactName, setContactName] = useState('');
   const [contactPhone, setContactPhone] = useState('');
@@ -100,10 +111,16 @@ export const PublicWebsite: React.FC = () => {
               </button>
 
               <button
-                onClick={() => setActiveTab('investorPortal')}
+                onClick={() => {
+                  if (isLoggedIn) {
+                    setActiveTab('investorPortal');
+                  } else {
+                    setIsLoginModalOpen(true);
+                  }
+                }}
                 className="px-6 py-3 text-sm font-semibold text-slate-200 bg-slate-900/80 hover:bg-slate-800 border border-slate-700 rounded-lg transition-colors flex items-center gap-2"
               >
-                <span>{language === 'bn' ? 'বিনিয়োগকারী পোর্টাল ডেমো' : 'Investor Portal Demo'}</span>
+                <span>{language === 'bn' ? 'বিনিয়োগকারী পোর্টাল লগইন' : 'Investor Portal Login'}</span>
                 <ArrowUpRight className="w-4 h-4 text-emerald-400" />
               </button>
             </div>
@@ -168,7 +185,7 @@ export const PublicWebsite: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="text-xs font-semibold text-emerald-700 tracking-wider uppercase mb-2">
-                {language === 'bn' ? 'আমাদের দৃষ্টিভঙ্গি ও মূল্যবোধ' : 'About Shobuj Bangla Agro'}
+                {language === 'bn' ? 'আমাদের দৃষ্টিভঙ্গি ও মূল্যবোধ' : 'About Ahmadun Agro'}
               </div>
               <h2 className="text-2xl sm:text-4xl font-bold text-slate-900 tracking-tight text-balance">
                 {language === 'bn'
@@ -177,8 +194,8 @@ export const PublicWebsite: React.FC = () => {
               </h2>
               <p className="mt-4 text-base text-slate-600 leading-relaxed">
                 {language === 'bn'
-                  ? 'সবুজ বাংলা এগ্রো ফার্ম একটি অগ্রগামী বহুমুখী কৃষি উদ্যোগ। আমাদের খামারগুলোতে প্রাণিসম্পদ অধিদপ্তর ও কৃষি বিশেষজ্ঞদের প্রত্যক্ষ তত্ত্বাবধানে আধুনিক বায়োসিকিউরিটি, স্বয়ংক্রিয় খাদ্য ব্যবস্থা, স্বাস্থ্যকর মাচা ও পুকুর ব্যবস্থাপনা নিশ্চিত করা হয়েছে।'
-                  : 'Shobuj Bangla Agro operates high-standard commercial livestock and organic farming across multiple strategically chosen zones in Bangladesh. We combine certified biosecurity, balanced nutrition, and advanced water/soil monitoring with institutional financial standards.'}
+                  ? 'আহমাদুন এগ্রো একটি অগ্রগামী বহুমুখী সমন্বিত কৃষি উদ্যোগ। আমাদের খামারগুলোতে প্রাণিসম্পদ অধিদপ্তর ও কৃষি বিশেষজ্ঞদের প্রত্যক্ষ তত্ত্বাবধানে আধুনিক বায়োসিকিউরিটি, স্বয়ংক্রিয় খাদ্য ব্যবস্থা, স্বাস্থ্যকর মাচা ও পুকুর ব্যবস্থাপনা নিশ্চিত করা হয়েছে।'
+                  : 'Ahmadun Agro operates high-standard commercial livestock and organic farming across multiple strategically chosen zones in Bangladesh. We combine certified biosecurity, balanced nutrition, and advanced water/soil monitoring with institutional financial standards.'}
               </p>
               <p className="mt-3 text-base text-slate-600 leading-relaxed">
                 {language === 'bn'
@@ -249,7 +266,13 @@ export const PublicWebsite: React.FC = () => {
             </div>
             <div className="mt-4 md:mt-0">
               <button
-                onClick={() => setActiveTab('sectors')}
+                onClick={() => {
+                  if (isLoggedIn) {
+                    setActiveTab('sectors');
+                  } else {
+                    setIsLoginModalOpen(true);
+                  }
+                }}
                 className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 hover:text-emerald-800"
               >
                 <span>{language === 'bn' ? 'সকল সেক্টরের বিস্তারিত ড্যাশবোর্ড' : 'View Full Sector Dashboards'}</span>
@@ -324,8 +347,12 @@ export const PublicWebsite: React.FC = () => {
                       </span>
                       <button
                         onClick={() => {
-                          setSelectedSectorId(sector.id);
-                          setActiveTab('sectors');
+                          if (isLoggedIn) {
+                            setSelectedSectorId(sector.id);
+                            setActiveTab('sectors');
+                          } else {
+                            setIsLoginModalOpen(true);
+                          }
                         }}
                         className="px-3.5 py-1.5 text-xs font-semibold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 rounded-md transition-colors"
                       >
@@ -348,7 +375,7 @@ export const PublicWebsite: React.FC = () => {
               {language === 'bn' ? 'বিনিয়োগ নিরাপত্তা ও সুবিধা' : 'Our Value Proposition'}
             </div>
             <h2 className="text-2xl sm:text-4xl font-bold text-slate-900 tracking-tight text-balance">
-              {language === 'bn' ? 'কেন সবুজ বাংলা এগ্রো ফার্মে বিনিয়োগ করবেন?' : 'Why Partner With Shobuj Bangla Agro?'}
+              {language === 'bn' ? 'কেন আহমাদুন এগ্রোতে বিনিয়োগ করবেন?' : 'Why Partner With Ahmadun Agro?'}
             </h2>
             <p className="mt-3 text-sm text-slate-600">
               {language === 'bn'
@@ -672,23 +699,57 @@ export const PublicWebsite: React.FC = () => {
       <footer className="bg-slate-950 text-slate-400 py-12 border-t border-slate-800 text-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-2">
-              <span className="text-emerald-500 text-lg">🌱</span>
-              <span className="font-bold text-white text-sm">
-                {language === 'bn' ? db.settings.farmNameBn : db.settings.farmName}
-              </span>
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg overflow-hidden bg-white p-0.5 flex items-center justify-center shrink-0">
+                <img
+                  src="/logo.png"
+                  alt="Ahmadun Agro Logo"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-contain"
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).src = '/logo.svg';
+                  }}
+                />
+              </div>
+              <div>
+                <span className="font-extrabold text-white text-sm block">
+                  Ahmadun Agro
+                </span>
+                <span className="text-[11px] text-emerald-400 font-semibold block leading-none">
+                  আহমাদুন এগ্রো
+                </span>
+              </div>
             </div>
 
             <div className="flex flex-wrap items-center gap-6 text-slate-400">
-              <button onClick={() => setActiveTab('public')} className="hover:text-white transition-colors">Home</button>
-              <button onClick={() => setActiveTab('sectors')} className="hover:text-white transition-colors">Sectors</button>
-              <button onClick={() => setActiveTab('investorPortal')} className="hover:text-white transition-colors">Investor Login</button>
-              <button onClick={() => setActiveTab('reports')} className="hover:text-white transition-colors">Reports</button>
-              <button onClick={() => setActiveTab('settings')} className="hover:text-white transition-colors">Admin Settings</button>
+              <button onClick={() => setActiveTab('public')} className="hover:text-white transition-colors">
+                {language === 'bn' ? 'হোম' : 'Home'}
+              </button>
+              <button 
+                onClick={() => {
+                  const el = document.getElementById('sectors-section');
+                  el?.scrollIntoView({ behavior: 'smooth' });
+                }} 
+                className="hover:text-white transition-colors"
+              >
+                {language === 'bn' ? 'প্রকল্পসমূহ' : 'Sectors'}
+              </button>
+              <button 
+                onClick={() => {
+                  if (isLoggedIn) {
+                    setActiveTab(currentUser.role === 'investor' ? 'investorPortal' : 'dashboard');
+                  } else {
+                    setIsLoginModalOpen(true);
+                  }
+                }} 
+                className="hover:text-white transition-colors"
+              >
+                {isLoggedIn ? (currentUser.role === 'investor' ? (language === 'bn' ? 'আমার পোর্টাল' : 'My Portal') : (language === 'bn' ? 'ড্যাশবোর্ড' : 'Dashboard')) : (language === 'bn' ? 'লগইন' : 'Sign In')}
+              </button>
             </div>
 
             <p className="text-slate-500 text-center md:text-right">
-              © {new Date().getFullYear()} Shobuj Bangla Integrated Agro Farm Ltd. All rights reserved.
+              © {new Date().getFullYear()} Ahmadun Agro (আহমাদুন এগ্রো). All rights reserved.
             </p>
           </div>
         </div>

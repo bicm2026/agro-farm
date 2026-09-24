@@ -131,7 +131,7 @@ export async function uploadDriveFile(
   const metadata: Record<string, any> = {
     name: file.name,
     mimeType: file.type || 'application/octet-stream',
-    description: description || 'Uploaded via Shobuj Bangla Farm Cloud',
+    description: description || 'Uploaded via Ahmadun Agro Cloud',
   };
 
   if (parentFolderId) {

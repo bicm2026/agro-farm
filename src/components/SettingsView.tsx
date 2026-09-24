@@ -89,7 +89,7 @@ export const SettingsView: React.FC = () => {
     ) {
       const fresh = resetDatabaseToDefault();
       updateDb(() => fresh);
-      showToast('System reset to original verified demo seed state!');
+      showToast('System reset to verified original database state!');
     }
   };
 
@@ -293,8 +293,8 @@ export const SettingsView: React.FC = () => {
                     : 'Download the entire production-ready React + TypeScript source code archive with all components and configs.'}
                 </p>
                 <a
-                  href="./shobuj-bangla-farm-source.zip"
-                  download="shobuj-bangla-agro-farm-source.zip"
+                  href="./ahmadun-agro-source.zip"
+                  download="ahmadun-agro-source.zip"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full py-2 text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 rounded-lg transition-colors flex items-center justify-center gap-1.5 shadow-xs"

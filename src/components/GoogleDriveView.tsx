@@ -247,7 +247,7 @@ export const GoogleDriveView: React.FC = () => {
       let mimeType = 'text/plain';
 
       if (exportType === 'financials') {
-        fileName = `Shobuj_Bangla_Financial_Report_${dateStr}.txt`;
+        fileName = `Ahmadun_Agro_Financial_Report_${dateStr}.txt`;
         const totalInv = db.investments.filter(i => i.status === 'active' || i.status === 'completed').reduce((s, i) => s + i.amount, 0);
         const totalInc = db.incomes.filter(i => i.status === 'approved').reduce((s, i) => s + i.totalAmount, 0);
         const totalExp = db.expenses.filter(i => i.status === 'approved').reduce((s, i) => s + i.amount, 0);
@@ -255,7 +255,7 @@ export const GoogleDriveView: React.FC = () => {
 
         fileContent = [
           '==============================================================',
-          'SHOBUJ BANGLA AGRO FARM LIMITED - OFFICIAL FINANCIAL AUDIT',
+          'AHMADUN AGRO (আহমাদুন এগ্রো) - OFFICIAL FINANCIAL AUDIT',
           `Generated Date: ${new Date().toLocaleString()}`,
           '==============================================================',
           '',
@@ -271,10 +271,10 @@ export const GoogleDriveView: React.FC = () => {
             return `• ${s.name} (${s.code}): Revenue BDT ${secInc.toLocaleString()} | Expense BDT ${secExp.toLocaleString()} | Net BDT ${(secInc - secExp).toLocaleString()}`;
           }),
           '',
-          'Certified by Shobuj Bangla Farm Operations & Accounting System',
+          'Certified by Ahmadun Agro Operations & Accounting System',
         ].join('\n');
       } else if (exportType === 'investor_ledger') {
-        fileName = `Shobuj_Bangla_Investor_Ledger_${dateStr}.csv`;
+        fileName = `Ahmadun_Agro_Investor_Ledger_${dateStr}.csv`;
         mimeType = 'text/csv';
         const rows = [
           ['Investor Name', 'Phone', 'NID/Passport', 'Total Invested (BDT)', 'Status'],
@@ -285,7 +285,7 @@ export const GoogleDriveView: React.FC = () => {
         ];
         fileContent = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
       } else {
-        fileName = `Shobuj_Bangla_Farm_Operations_${dateStr}.csv`;
+        fileName = `Ahmadun_Agro_Farm_Operations_${dateStr}.csv`;
         mimeType = 'text/csv';
         const rows = [
           ['Date', 'Sector', 'Activities', 'Production Yield', 'Feed (Kg)', 'Labor'],

@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="leftStalk" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14532d"/>
+      <stop offset="100%" stop-color="#166534"/>
+    </linearGradient>
+    <linearGradient id="rightStalk" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#166534"/>
+      <stop offset="100%" stop-color="#15803d"/>
+    </linearGradient>
+    <linearGradient id="sunGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#eab308"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#15803d"/>
+      <stop offset="100%" stop-color="#4ade80"/>
+    </linearGradient>
+    <linearGradient id="field1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#86efac"/>
+      <stop offset="100%" stop-color="#4ade80"/>
+    </linearGradient>
+    <linearGradient id="field2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4ade80"/>
+      <stop offset="100%" stop-color="#22c55e"/>
+    </linearGradient>
+    <linearGradient id="field3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#15803d"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background is transparent / clean -->
+
+  <!-- Rising Sun inside apex -->
+  <circle cx="238" cy="225" r="32" fill="url(#sunGrad)"/>
+
+  <!-- Main "A" Frame -->
+  <!-- Left Leg -->
+  <path d="M 236 78 L 152 276 L 195 276 L 244 156 Z" fill="url(#leftStalk)"/>
+  <!-- Right Leg -->
+  <path d="M 252 78 L 242 165 L 292 276 L 342 276 Z" fill="url(#rightStalk)"/>
+
+  <!-- Sprouting Leaf on Right -->
+  <!-- Main Leaf -->
+  <path d="M 278 140 C 275 110, 315 90, 340 98 C 345 125, 315 155, 278 140 Z" fill="url(#leafGrad)"/>
+  <!-- Small Leaf -->
+  <path d="M 268 152 C 270 135, 292 125, 305 132 C 308 146, 290 162, 268 152 Z" fill="#86efac"/>
+
+  <!-- Agricultural Furrow Waves (bottom of A) -->
+  <!-- Bottom wave -->
+  <path d="M 152 278 C 190 262, 240 236, 285 240 C 265 252, 215 272, 175 282 Z" fill="url(#field3)"/>
+  <!-- Middle wave -->
+  <path d="M 175 264 C 210 248, 255 228, 292 232 C 272 242, 228 260, 192 268 Z" fill="url(#field2)"/>
+  <!-- Top wave -->
+  <path d="M 195 250 C 225 235, 265 220, 298 224 C 280 232, 242 246, 210 254 Z" fill="url(#field1)"/>
+
+  <!-- English Text: Ahmadun Agro -->
+  <text x="250" y="342" 
+        font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" 
+        font-size="52" 
+        font-weight="800" 
+        fill="#14532d" 
+        text-anchor="middle" 
+        letter-spacing="-1">
+    Ahmadun Agro
+  </text>
+
+  <!-- Accent Line Left -->
+  <line x1="68" y1="388" x2="128" y2="388" stroke="#166534" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Bangla Text: আহমাদুন এগ্রো -->
+  <text x="250" y="398" 
+        font-family="'Hind Siliguri', 'Noto Sans Bengali', system-ui, sans-serif" 
+        font-size="36" 
+        font-weight="700" 
+        fill="#166534" 
+        text-anchor="middle">
+    আহমাদুন এগ্রো
+  </text>
+
+  <!-- Accent Line Right -->
+  <line x1="372" y1="388" x2="432" y2="388" stroke="#166534" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

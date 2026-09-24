@@ -15,6 +15,11 @@ interface AppContextType {
   db: AppDatabase;
   currentUser: User;
   setCurrentUser: (user: User) => void;
+  isLoggedIn: boolean;
+  login: (user: User) => void;
+  logout: () => void;
+  isLoginModalOpen: boolean;
+  setIsLoginModalOpen: (open: boolean) => void;
   language: Language;
   setLanguage: (lang: Language) => void;
   activeTab: string;
@@ -41,14 +46,52 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [db, setDb] = useState<AppDatabase>(() => loadDatabase());
-  const [currentUser, setCurrentUser] = useState<User>(() => db.users[0]); // Default to Super Admin
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
+    return localStorage.getItem('ahmadun_auth_status') === 'true' || localStorage.getItem('shobuj_auth_status') === 'true';
+  });
+  const [currentUser, setCurrentUser] = useState<User>(() => {
+    const savedUserId = localStorage.getItem('ahmadun_auth_user_id') || localStorage.getItem('shobuj_auth_user_id');
+    if (savedUserId) {
+      const found = db.users.find(u => u.id === savedUserId);
+      if (found) return found;
+    }
+    return db.users[0];
+  });
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [language, setLanguage] = useState<Language>(() => db.settings.defaultLanguage || 'bn');
-  const [activeTab, setActiveTab] = useState<string>('public'); // Start with public website or dashboard
+  const [activeTab, setActiveTab] = useState<string>('public'); // Start with public website
   const [selectedSectorId, setSelectedSectorId] = useState<string | null>(null);
   const [selectedInvestorId, setSelectedInvestorId] = useState<string | null>(null);
   const [notificationMessage, setNotificationMessage] = useState<string | null>(null);
 
   const t = translations[language];
+
+  const login = (user: User) => {
+    setCurrentUser(user);
+    setIsLoggedIn(true);
+    localStorage.setItem('ahmadun_auth_status', 'true');
+    localStorage.setItem('ahmadun_auth_user_id', user.id);
+    if (user.role === 'investor' && user.investorProfileId) {
+      setSelectedInvestorId(user.investorProfileId);
+      setActiveTab('investorPortal');
+    } else if (user.role === 'sector_manager' && user.assignedSectorId) {
+      setSelectedSectorId(user.assignedSectorId);
+      setActiveTab('sectors');
+    } else {
+      setActiveTab('dashboard');
+    }
+    showToast(language === 'bn' ? `স্বাগতম, ${user.name}!` : `Welcome back, ${user.name}!`);
+  };
+
+  const logout = () => {
+    setIsLoggedIn(false);
+    localStorage.removeItem('ahmadun_auth_status');
+    localStorage.removeItem('ahmadun_auth_user_id');
+    localStorage.removeItem('shobuj_auth_status');
+    localStorage.removeItem('shobuj_auth_user_id');
+    setActiveTab('public');
+    showToast(language === 'bn' ? 'সফলভাবে লগআউট করা হয়েছে।' : 'Logged out successfully.');
+  };
 
   // Keep db synced to localStorage whenever db changes
   useEffect(() => {
@@ -74,7 +117,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const fresh = resetDatabaseToDefault();
     setDb(fresh);
     setCurrentUser(fresh.users[0]);
-    showToast('Database reset to initial demo data!');
+    showToast('Database reset to initial standard state!');
   };
 
   const logAudit = (
@@ -126,7 +169,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `shobuj_bangla_agro_backup_${new Date().toISOString().slice(0, 10)}.json`;
+    link.download = `ahmadun_agro_backup_${new Date().toISOString().slice(0, 10)}.json`;
     link.click();
     URL.revokeObjectURL(url);
     showToast('Full database JSON backup downloaded!');
@@ -199,6 +242,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         db,
         currentUser,
         setCurrentUser,
+        isLoggedIn,
+        login,
+        logout,
+        isLoginModalOpen,
+        setIsLoginModalOpen,
         language,
         setLanguage,
         activeTab,

@@ -41,7 +41,7 @@ export const formatDate = (dateStr: string, lang: Language = 'bn'): string => {
 export const translations = {
   bn: {
     // Navigation & Common
-    appName: 'সবুজ বাংলা এগ্রো ফার্ম',
+    appName: 'আহমাদুন এগ্রো',
     tagline: 'স্বচ্ছ বিনিয়োগ ও আধুনিক সমন্বিত কৃষি ব্যবস্থাপনা',
     dashboard: 'ড্যাশবোর্ড',
     sectors: 'ফার্ম সেক্টরসমূহ',
@@ -91,7 +91,7 @@ export const translations = {
     description: 'বিবরণ',
     all: 'সকল',
     filter: 'ফিল্টার',
-    demoDataNotice: 'ডেমো ডেটা — পরীক্ষামূলক ব্যবহারের জন্য লোড করা হয়েছে',
+    demoDataNotice: 'অফিশিয়াল ডাটাবেজ তথ্য — সুরক্ষিত ও হালনাগাদকৃত',
 
     // Financial Overview
     totalInvestment: 'মোট মূলধন বিনিয়োগ',
@@ -157,7 +157,7 @@ export const translations = {
   },
   en: {
     // Navigation & Common
-    appName: 'Shobuj Bangla Agro Farm',
+    appName: 'Ahmadun Agro',
     tagline: 'Transparent Investment & Integrated Agro Farm Management',
     dashboard: 'Dashboard',
     sectors: 'Farm Sectors',
@@ -207,7 +207,7 @@ export const translations = {
     description: 'Description',
     all: 'All',
     filter: 'Filter',
-    demoDataNotice: 'DEMO DATA — Preloaded for evaluation & immediate testing',
+    demoDataNotice: 'Official Farm Database — Verified & Synced',
 
     // Financial Overview
     totalInvestment: 'Total Capital Investment',
@@ -260,7 +260,7 @@ export const translations = {
     addField: 'Add Field',
     backupDatabase: 'Backup Database (Download JSON)',
     restoreDatabase: 'Restore Database (Upload JSON)',
-    resetDemo: 'Reset to Default Demo Data',
+    resetDemo: 'Reset to Factory Agro Database',
     bangladeshOffice: 'Corporate Office: House #12, Road #4, Gulshan-1, Dhaka',
     bangladeshFarm: 'Agro Facility: Chandra, Kaliakair, Gazipur & Kishoreganj Haor',
     name: 'Name',
