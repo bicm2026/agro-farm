@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { ExpenseRecord, ExpenseCategory, PaymentMethod } from '../types';
 import { formatCurrency, formatDate } from '../utils/translations';
+import { APP_IMAGES } from '../utils/imageAssets';
 import { 
   Receipt, 
   Plus, 
@@ -129,7 +130,7 @@ export const ExpenseView: React.FC = () => {
       paidByName: currentUser.name,
       paymentMethod,
       voucherNo: voucherNo || `VOUCH-SBA-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`,
-      receiptAttachment: '/src/assets/images/hero_agro_farm_1790145662591.jpg',
+      receiptAttachment: APP_IMAGES.hero,
       status: initialStatus,
       approvedByUserId: isFinanceAuthority ? currentUser.id : undefined,
       approvedByName: isFinanceAuthority ? currentUser.name : undefined,

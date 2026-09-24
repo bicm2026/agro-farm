@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { formatCurrency, formatDate, formatNumber } from '../utils/translations';
+import { APP_IMAGES } from '../utils/imageAssets';
 import { 
   FileSpreadsheet, 
   Printer, 
@@ -494,12 +495,12 @@ export const ReportsView: React.FC = () => {
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center p-1 shadow-xs border border-emerald-200">
                   <img
-                    src="/logo.png"
+                    src={APP_IMAGES.logo}
                     alt="Ahmadun Agro Logo"
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-contain"
                     onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).src = '/logo.svg';
+                      (e.currentTarget as HTMLImageElement).src = APP_IMAGES.logoSvg;
                     }}
                   />
                 </div>

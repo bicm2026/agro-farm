@@ -37,6 +37,7 @@ import {
   initialWidgets,
   initialSettings
 } from './mockData';
+import { resolveFarmImage } from '../utils/imageAssets';
 
 const STORAGE_KEY = 'ahmadun_agro_db_v2';
 
@@ -61,17 +62,27 @@ export interface AppDatabase {
   settings: FarmSettings;
 }
 
+function normalizeImagePath(url: string | undefined): string {
+  return resolveFarmImage(url);
+}
+
 export function loadDatabase(): AppDatabase {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
       const widgetList = parsed.dashboardWidgets || parsed.widgets || initialWidgets;
-      // Ensure all critical arrays exist
+      const rawSectors = parsed.sectors || initialSectors;
+      const rawGallery = parsed.gallery || initialGallery;
+
+      // Ensure all critical arrays exist and paths are normalized
       return {
         users: parsed.users || initialUsers,
         investors: parsed.investors || initialInvestors,
-        sectors: parsed.sectors || initialSectors,
+        sectors: rawSectors.map((s: FarmSector) => ({
+          ...s,
+          image: normalizeImagePath(s.image)
+        })),
         investments: parsed.investments || initialInvestments,
         incomes: parsed.incomes || initialIncomes,
         expenses: parsed.expenses || initialExpenses,
@@ -82,7 +93,10 @@ export function loadDatabase(): AppDatabase {
         profitDistributions: parsed.profitDistributions || initialProfitDistributions,
         auditLogs: parsed.auditLogs || initialAuditLogs,
         announcements: parsed.announcements || initialAnnouncements,
-        gallery: parsed.gallery || initialGallery,
+        gallery: rawGallery.map((g: GalleryItem) => ({
+          ...g,
+          url: normalizeImagePath(g.url)
+        })),
         customModules: parsed.customModules || initialCustomModules,
         widgets: widgetList,
         dashboardWidgets: widgetList,

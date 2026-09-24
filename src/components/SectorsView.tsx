@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { FarmSector } from '../types';
 import { formatCurrency, formatNumber, formatDate } from '../utils/translations';
+import { APP_IMAGES, resolveFarmImage } from '../utils/imageAssets';
 import { 
   Sprout, 
   Plus, 
@@ -57,7 +58,7 @@ export const SectorsView: React.FC = () => {
   const [sectorCode, setSectorCode] = useState('');
   const [sectorDesc, setSectorDesc] = useState('');
   const [sectorDescBn, setSectorDescBn] = useState('');
-  const [sectorImage, setSectorImage] = useState('/src/assets/images/hero_agro_farm_1790145662591.jpg');
+  const [sectorImage, setSectorImage] = useState(APP_IMAGES.hero);
   const [sectorArea, setSectorArea] = useState('5 Bighas');
   const [metricLabel, setMetricLabel] = useState('');
   const [metricLabelBn, setMetricLabelBn] = useState('');
@@ -250,9 +251,12 @@ export const SectorsView: React.FC = () => {
       <div className="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
         <div className="relative aspect-21/9 sm:aspect-3/1 w-full bg-slate-900 overflow-hidden">
           <img
-            src={currentSector.image}
+            src={resolveFarmImage(currentSector.image)}
             alt={currentSector.name}
             className="w-full h-full object-cover opacity-80"
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).src = APP_IMAGES.heroFallback;
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
           

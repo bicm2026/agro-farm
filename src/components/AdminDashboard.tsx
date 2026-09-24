@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { formatCurrency, formatNumber, formatDate } from '../utils/translations';
+import { APP_IMAGES, resolveFarmImage } from '../utils/imageAssets';
 import { 
   TrendingUp, 
   Receipt, 
@@ -355,9 +356,12 @@ export const AdminDashboard: React.FC = () => {
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
                     <img
-                      src={s.image}
+                      src={resolveFarmImage(s.image)}
                       alt={s.name}
                       className="w-8 h-8 rounded-md object-cover shrink-0"
+                      onError={(e) => {
+                        (e.currentTarget as HTMLImageElement).src = APP_IMAGES.hero;
+                      }}
                     />
                     <div className="truncate">
                       <p className="text-xs font-semibold text-slate-900 group-hover:text-emerald-800 truncate">

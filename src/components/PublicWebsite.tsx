@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { formatCurrency, formatNumber } from '../utils/translations';
+import { APP_IMAGES, resolveFarmImage } from '../utils/imageAssets';
 import { 
   Sprout, 
   ShieldCheck, 
@@ -72,9 +73,12 @@ export const PublicWebsite: React.FC = () => {
       <section className="relative overflow-hidden bg-slate-950 text-white">
         <div className="absolute inset-0 z-0">
           <img
-            src="/src/assets/images/hero_agro_farm_1790145662591.jpg"
+            src={APP_IMAGES.hero}
             alt="Modern Agro Farm in Bangladesh"
             className="w-full h-full object-cover opacity-35"
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).src = APP_IMAGES.heroFallback;
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-transparent" />
         </div>
@@ -229,9 +233,12 @@ export const PublicWebsite: React.FC = () => {
             <div className="relative">
               <div className="aspect-4/3 rounded-xl overflow-hidden shadow-lg border border-slate-200">
                 <img
-                  src="/src/assets/images/sector_duck_farm_1790145674441.jpg"
+                  src={APP_IMAGES.sectorDuck}
                   alt="Duck farm pond"
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).src = APP_IMAGES.sectorDuckFallback;
+                  }}
                 />
               </div>
               <div className="absolute -bottom-6 -left-6 bg-white p-5 rounded-lg border border-slate-200 shadow-xl max-w-xs hidden sm:block">
@@ -292,9 +299,12 @@ export const PublicWebsite: React.FC = () => {
                 >
                   <div className="relative aspect-16/10 overflow-hidden bg-slate-100">
                     <img
-                      src={sector.image}
+                      src={resolveFarmImage(sector.image)}
                       alt={sector.name}
                       className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                      onError={(e) => {
+                        (e.currentTarget as HTMLImageElement).src = APP_IMAGES.hero;
+                      }}
                     />
                     <div className="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-xs text-white text-[11px] font-semibold px-2.5 py-1 rounded">
                       {sector.code}
@@ -527,9 +537,12 @@ export const PublicWebsite: React.FC = () => {
               >
                 <div className="aspect-4/3 overflow-hidden">
                   <img
-                    src={item.url}
+                    src={resolveFarmImage(item.url)}
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).src = APP_IMAGES.hero;
+                    }}
                   />
                 </div>
                 <div className="p-3 bg-white">
@@ -702,12 +715,12 @@ export const PublicWebsite: React.FC = () => {
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg overflow-hidden bg-white p-0.5 flex items-center justify-center shrink-0">
                 <img
-                  src="/logo.png"
+                  src={APP_IMAGES.logo}
                   alt="Ahmadun Agro Logo"
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-contain"
                   onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).src = '/logo.svg';
+                    (e.currentTarget as HTMLImageElement).src = APP_IMAGES.logoSvg;
                   }}
                 />
               </div>

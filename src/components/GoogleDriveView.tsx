@@ -358,7 +358,11 @@ export const GoogleDriveView: React.FC = () => {
                 <img 
                   src={userInfo.photoLink} 
                   alt={userInfo.displayName || 'Google User'} 
+                  referrerPolicy="no-referrer"
                   className="w-9 h-9 rounded-full border border-slate-200" 
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).style.display = 'none';
+                  }}
                 />
               ) : (
                 <div className="w-9 h-9 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold text-xs">

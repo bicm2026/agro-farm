@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { formatCurrency, formatDate, formatNumber } from '../utils/translations';
+import { APP_IMAGES, resolveFarmImage } from '../utils/imageAssets';
 import { 
   Building2, 
   Wallet, 
@@ -410,9 +411,12 @@ export const InvestorPortalView: React.FC = () => {
                     </span>
                     <div className="relative rounded-lg overflow-hidden border border-slate-200 h-36">
                       <img
-                        src={activeSector.imageUrl || activeSector.image}
+                        src={resolveFarmImage(activeSector.imageUrl || activeSector.image)}
                         alt={activeSector.name}
                         className="w-full h-full object-cover"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLImageElement).src = APP_IMAGES.heroFallback;
+                        }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-2.5">
                         <span className="text-xs font-medium text-white flex items-center gap-1.5">

@@ -80,7 +80,14 @@ export const RoleSwitcherModal: React.FC<Props> = ({ isOpen, onClose }) => {
           <div className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
             <div className="w-14 h-14 rounded-2xl bg-emerald-100 border border-emerald-200 flex items-center justify-center shrink-0 overflow-hidden text-emerald-800 font-bold text-xl">
               {currentUser.avatar ? (
-                <img src={currentUser.avatar} alt={currentUser.name} className="w-full h-full object-cover" />
+                <img
+                  src={currentUser.avatar}
+                  alt={currentUser.name}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).style.display = 'none';
+                  }}
+                />
               ) : (
                 <Icon className="w-7 h-7 text-emerald-700" />
               )}

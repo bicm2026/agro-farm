@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
+import { APP_IMAGES } from '../utils/imageAssets';
 import { 
   Mail, 
   ArrowRight, 
@@ -54,12 +55,12 @@ export const LoginModal: React.FC<Props> = ({ isOpen, onClose }) => {
           <div className="flex items-center gap-3">
             <div className="w-11 h-11 rounded-xl bg-white p-1 flex items-center justify-center shadow-xs shrink-0">
               <img
-                src="/logo.png"
+                src={APP_IMAGES.logo}
                 alt="Ahmadun Agro"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-contain"
                 onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).src = '/logo.svg';
+                  (e.currentTarget as HTMLImageElement).src = APP_IMAGES.logoSvg;
                 }}
               />
             </div>

@@ -17,6 +17,7 @@ import {
   GalleryItem, 
   FarmSettings 
 } from '../types';
+import { APP_IMAGES } from '../utils/imageAssets';
 
 export const initialUsers: User[] = [
   {
@@ -176,7 +177,7 @@ export const initialSectors: FarmSector[] = [
     nameBn: 'হাঁস খামার প্রকল্প',
     description: 'High-yield Khaki Campbell & Beijing duck farming with bio-secure open water pond channels and organic egg production in Kishoreganj Haor.',
     descriptionBn: 'কিশোরগঞ্জ হাওর অঞ্চলে খাকি ক্যাম্পবেল ও বেইজিং হাঁসের মুক্ত জলাশয় ভিত্তিক আধুনিক ডিম ও মাংস উৎপাদন প্রকল্প।',
-    image: '/src/assets/images/sector_duck_farm_1790145674441.jpg',
+    image: APP_IMAGES.sectorDuck,
     managerUserId: 'user-mgr-duck',
     managerName: 'Md. Jahangir Alam',
     status: 'active',
@@ -196,7 +197,7 @@ export const initialSectors: FarmSector[] = [
     nameBn: 'পোল্ট্রি ও মুরগি খামার',
     description: 'Automated climate-controlled commercial layer and Sonali chicken shed in Gazipur producing certified fresh eggs and organic poultry.',
     descriptionBn: 'গাজীপুরে উন্নত সোনালীর ও লেয়ার মুরগির অটোমেটেড শেড, বায়োসিকিউরিটি ও পুষ্টিকর খাদ্য নিয়ন্ত্রিত খামার।',
-    image: '/src/assets/images/sector_poultry_chicken_1790145686089.jpg',
+    image: APP_IMAGES.sectorPoultry,
     managerUserId: 'user-admin',
     managerName: 'Engr. Kazi Tariqul Islam',
     status: 'active',
@@ -216,7 +217,7 @@ export const initialSectors: FarmSector[] = [
     nameBn: 'ব্ল্যাক বেঙ্গল ছাগল খামার',
     description: 'Pedigree Black Bengal and Jamunapari goat breeding and fattening on elevated slotted wooden floors in Chuadanga.',
     descriptionBn: 'চুয়াডাঙ্গায় মাচা পদ্ধতিতে খাঁটি ব্ল্যাক বেঙ্গল ও যমুনাপারি ছাগলের বৈজ্ঞানিক প্রজনন ও হৃষ্টপুষ্টকরণ খামার।',
-    image: '/src/assets/images/sector_goat_farm_1790145697618.jpg',
+    image: APP_IMAGES.sectorGoat,
     managerUserId: 'user-mgr-goat',
     managerName: 'Abul Kashem',
     status: 'active',
@@ -236,7 +237,7 @@ export const initialSectors: FarmSector[] = [
     nameBn: 'উন্নত জাতের কবুতর খামার',
     description: 'Commercial exotic and squab-producing pigeon breeding including King, Strasser, Siraji and high-flying breeds.',
     descriptionBn: 'কিং, সিরাজি ও উন্নত জাতের ব্রুডিং কবুতর পালন ও স্কোয়াব (বাচ্চা) বাণিজ্যিক বিপণন প্রকল্প।',
-    image: '/src/assets/images/hero_agro_farm_1790145662591.jpg',
+    image: APP_IMAGES.hero,
     managerUserId: 'user-admin',
     managerName: 'Engr. Kazi Tariqul Islam',
     status: 'active',
@@ -256,7 +257,7 @@ export const initialSectors: FarmSector[] = [
     nameBn: 'জৈব শাকসবজি চাষ',
     description: 'Year-round pesticide-safe vegetables using drip irrigation, mulching paper, and bio-fertilizer in Narsingdi fertile belt.',
     descriptionBn: 'নরসিংদীতে মালচিং পেপার, ট্রিপল ট্রেলিস ও ড্রিপ সেচ পদ্ধতিতে বিষমুক্ত বারোমাসি লাউ, পটল, ক্যাপসিকাম ও টমেটো চাষ।',
-    image: '/src/assets/images/sector_vegetable_farm_1790145709487.jpg',
+    image: APP_IMAGES.sectorVegetable,
     managerUserId: 'user-admin',
     managerName: 'Engr. Kazi Tariqul Islam',
     status: 'active',
@@ -1074,7 +1075,7 @@ export const initialGallery: GalleryItem[] = [
     titleBn: 'হাওরের মুক্ত জলাশয়ে খাকি ক্যাম্পবেল হাঁসের ঝাঁক',
     description: 'Clean swimming waters in Kishoreganj Haor shelter.',
     mediaType: 'photo',
-    url: '/src/assets/images/sector_duck_farm_1790145674441.jpg',
+    url: APP_IMAGES.sectorDuck,
     date: '2026-09-18',
   },
   {
@@ -1084,7 +1085,7 @@ export const initialGallery: GalleryItem[] = [
     titleBn: 'চুয়াডাঙ্গায় মাচায় লালিত খাঁটি ব্ল্যাক বেঙ্গল ছাগল',
     description: 'Elevated hygienic wooden slats preventing hoof rot and pneumonia.',
     mediaType: 'photo',
-    url: '/src/assets/images/sector_goat_farm_1790145697618.jpg',
+    url: APP_IMAGES.sectorGoat,
     date: '2026-09-15',
   },
   {
@@ -1094,7 +1095,7 @@ export const initialGallery: GalleryItem[] = [
     titleBn: 'বাঁশের মাচায় বিষমুক্ত তাজা লাউয়ের বাম্পার ফলন',
     description: 'Pesticide-free organic vegetables ready for early morning harvest.',
     mediaType: 'photo',
-    url: '/src/assets/images/sector_vegetable_farm_1790145709487.jpg',
+    url: APP_IMAGES.sectorVegetable,
     date: '2026-09-19',
   },
   {
@@ -1104,7 +1105,7 @@ export const initialGallery: GalleryItem[] = [
     titleBn: 'গাজীপুরে সোলার ভেন্টিলেটেড আধুনিক পোল্ট্রি শেড',
     description: 'Automated drinking nipples and climate sensor lines.',
     mediaType: 'photo',
-    url: '/src/assets/images/sector_poultry_chicken_1790145686089.jpg',
+    url: APP_IMAGES.sectorPoultry,
     date: '2026-09-10',
   },
 ];

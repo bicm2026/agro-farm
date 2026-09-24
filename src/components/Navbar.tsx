@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { RoleSwitcherModal } from './RoleSwitcherModal';
 import { LoginModal } from './LoginModal';
+import { APP_IMAGES } from '../utils/imageAssets';
 import { 
   ShieldCheck, 
   UserCheck, 
@@ -95,12 +96,12 @@ export const Navbar: React.FC<Props> = ({ onToggleSidebar, isSidebarOpen }) => {
               >
                 <div className="w-10 h-10 rounded-xl overflow-hidden bg-white shadow-xs border border-emerald-100 flex items-center justify-center shrink-0 group-hover:border-emerald-300 transition-colors">
                   <img
-                    src="/logo.png"
+                    src={APP_IMAGES.logo}
                     alt="Ahmadun Agro Logo"
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-contain"
                     onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).src = '/logo.svg';
+                      (e.currentTarget as HTMLImageElement).src = APP_IMAGES.logoSvg;
                     }}
                   />
                 </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { APP_IMAGES } from '../utils/imageAssets';
 
 interface AhmadunLogoProps {
   className?: string;
@@ -26,13 +27,12 @@ export const AhmadunLogo: React.FC<AhmadunLogoProps> = ({
     return (
       <div className={`relative shrink-0 rounded-xl overflow-hidden bg-white shadow-xs border border-emerald-100 flex items-center justify-center ${currentSize.icon} ${className}`}>
         <img
-          src="/logo.png"
+          src={APP_IMAGES.logo}
           alt="Ahmadun Agro Logo"
           referrerPolicy="no-referrer"
           className="w-full h-full object-contain p-0.5"
           onError={(e) => {
-            // Fallback to SVG if PNG has any issue
-            (e.currentTarget as HTMLImageElement).src = '/logo.svg';
+            (e.currentTarget as HTMLImageElement).src = APP_IMAGES.logoSvg;
           }}
         />
       </div>
@@ -46,12 +46,12 @@ export const AhmadunLogo: React.FC<AhmadunLogoProps> = ({
       {/* Emblem / Logo Icon */}
       <div className={`relative shrink-0 rounded-xl overflow-hidden bg-white shadow-xs border ${isLight ? 'border-white/20' : 'border-emerald-100'} flex items-center justify-center ${currentSize.icon}`}>
         <img
-          src="/logo.png"
+          src={APP_IMAGES.logo}
           alt="Ahmadun Agro Logo"
           referrerPolicy="no-referrer"
           className="w-full h-full object-contain p-0.5"
           onError={(e) => {
-            (e.currentTarget as HTMLImageElement).src = '/logo.svg';
+            (e.currentTarget as HTMLImageElement).src = APP_IMAGES.logoSvg;
           }}
         />
       </div>
