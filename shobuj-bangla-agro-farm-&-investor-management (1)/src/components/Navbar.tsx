@@ -1,0 +1,274 @@
+import React, { useState } from 'react';
+import { useApp } from '../context/AppContext';
+import { RoleSwitcherModal } from './RoleSwitcherModal';
+import { ShieldCheck, UserCheck, Briefcase, Wallet, Globe, RefreshCw, Menu, X, HardDrive, Download } from 'lucide-react';
+
+interface Props {
+  onToggleSidebar?: () => void;
+  isSidebarOpen?: boolean;
+}
+
+export const Navbar: React.FC<Props> = ({ onToggleSidebar, isSidebarOpen }) => {
+  const { currentUser, language, setLanguage, activeTab, setActiveTab, t, resetDb, db } = useApp();
+  const [isRoleModalOpen, setIsRoleModalOpen] = useState(false);
+
+  const getRoleShortLabel = (role: string) => {
+    switch (role) {
+      case 'super_admin':
+        return 'Super Admin';
+      case 'accountant':
+        return 'Accountant';
+      case 'sector_manager':
+        return 'Sector Manager';
+      case 'investor':
+        return 'Investor';
+      default:
+        return role;
+    }
+  };
+
+  const getRoleIcon = (role: string) => {
+    switch (role) {
+      case 'super_admin':
+        return ShieldCheck;
+      case 'accountant':
+        return Briefcase;
+      case 'sector_manager':
+        return UserCheck;
+      case 'investor':
+        return Wallet;
+      default:
+        return UserCheck;
+    }
+  };
+
+  const RoleIcon = getRoleIcon(currentUser.role);
+
+  return (
+    <>
+      <header className="sticky top-0 z-40 bg-white border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 gap-4">
+            
+            {/* Zone 1: Brand title wordmark */}
+            <div className="flex items-center gap-3 shrink-0">
+              {activeTab !== 'public' && activeTab !== 'website' && onToggleSidebar && (
+                <button
+                  onClick={onToggleSidebar}
+                  className="p-2 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition-colors flex items-center justify-center"
+                  aria-label="Toggle Navigation"
+                  title={isSidebarOpen ? (language === 'bn' ? 'সাইডবার লুকান' : 'Hide Sidebar') : (language === 'bn' ? 'সাইডবার দেখান' : 'Show Sidebar')}
+                >
+                  {isSidebarOpen ? <X className="w-5 h-5 text-slate-700" /> : <Menu className="w-5 h-5 text-slate-700" />}
+                </button>
+              )}
+
+              <button
+                onClick={() => setActiveTab('public')}
+                className="text-left group flex items-center gap-2.5 focus:outline-none"
+              >
+                <div className="w-8 h-8 rounded-lg bg-emerald-700 flex items-center justify-center text-white font-bold text-base shadow-xs">
+                  🌱
+                </div>
+                <div>
+                  <span className="text-base sm:text-lg font-bold tracking-tight text-slate-900 group-hover:text-emerald-700 transition-colors">
+                    {language === 'bn' ? db.settings.farmNameBn.split(' ')[0] + ' ' + db.settings.farmNameBn.split(' ')[1] : 'SHOBUJ BANGLA AGRO'}
+                  </span>
+                  <span className="hidden sm:block text-[11px] text-slate-500 font-medium leading-none">
+                    {language === 'bn' ? 'স্বচ্ছ কৃষি ব্যবস্থাপনা' : 'Agro Farm & Investor Transparency'}
+                  </span>
+                </div>
+              </button>
+            </div>
+
+            {/* Zone 2: Navigation Links */}
+            <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+              <button
+                onClick={() => setActiveTab('public')}
+                className={`hover:text-slate-900 transition-colors whitespace-nowrap ${
+                  activeTab === 'public' || activeTab === 'website' ? 'text-emerald-700 font-semibold border-b-2 border-emerald-700 py-5' : ''
+                }`}
+              >
+                {t.publicSite}
+              </button>
+
+              {currentUser.role === 'investor' ? (
+                <button
+                  onClick={() => setActiveTab('investorPortal')}
+                  className={`hover:text-slate-900 transition-colors whitespace-nowrap ${
+                    activeTab === 'investorPortal' ? 'text-emerald-700 font-semibold border-b-2 border-emerald-700 py-5' : ''
+                  }`}
+                >
+                  {t.investorPortalTitle}
+                </button>
+              ) : (
+                <>
+                  <button
+                    onClick={() => setActiveTab('dashboard')}
+                    className={`hover:text-slate-900 transition-colors whitespace-nowrap ${
+                      activeTab === 'dashboard' ? 'text-emerald-700 font-semibold border-b-2 border-emerald-700 py-5' : ''
+                    }`}
+                  >
+                    {t.dashboard}
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('sectors')}
+                    className={`hover:text-slate-900 transition-colors whitespace-nowrap ${
+                      activeTab === 'sectors' ? 'text-emerald-700 font-semibold border-b-2 border-emerald-700 py-5' : ''
+                    }`}
+                  >
+                    {t.sectors}
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('accounting')}
+                    className={`hover:text-slate-900 transition-colors whitespace-nowrap ${
+                      activeTab === 'accounting' ? 'text-emerald-700 font-semibold border-b-2 border-emerald-700 py-5' : ''
+                    }`}
+                  >
+                    {t.accounting}
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('reports')}
+                    className={`hover:text-slate-900 transition-colors whitespace-nowrap ${
+                      activeTab === 'reports' ? 'text-emerald-700 font-semibold border-b-2 border-emerald-700 py-5' : ''
+                    }`}
+                  >
+                    {t.reports}
+                  </button>
+                </>
+              )}
+            </nav>
+
+            {/* Zone 3: Actions & Controls */}
+            <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+              
+              {/* Google Drive Shortcut */}
+              <button
+                onClick={() => setActiveTab('drive')}
+                className={`hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold rounded-lg border transition-colors ${
+                  activeTab === 'drive'
+                    ? 'bg-emerald-50 text-emerald-800 border-emerald-300'
+                    : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+                }`}
+                title="Google Drive Cloud Storage"
+              >
+                <HardDrive className="w-3.5 h-3.5 text-emerald-700" />
+                <span>Drive</span>
+              </button>
+
+              {/* Download Source Code ZIP */}
+              <a
+                href="./shobuj-bangla-farm-source.zip"
+                download="shobuj-bangla-agro-farm-source.zip"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold rounded-lg border border-emerald-600 bg-emerald-700 hover:bg-emerald-800 text-white shadow-xs transition-colors"
+                title={language === 'bn' ? 'সম্পূর্ণ সোর্স কোড ডাউনলোড করুন (.zip)' : 'Download Full Source Code (.zip)'}
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span className="hidden md:inline">{language === 'bn' ? 'ডাউনলোড (.zip)' : 'Download Zip'}</span>
+                <span className="md:hidden">ZIP</span>
+              </a>
+
+              {/* Language Switcher */}
+              <div className="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-200">
+                <button
+                  onClick={() => setLanguage('bn')}
+                  className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-colors ${
+                    language === 'bn'
+                      ? 'bg-white text-emerald-800 shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                  title="বাংলা ভাষায় দেখুন"
+                >
+                  বাংলা
+                </button>
+                <button
+                  onClick={() => setLanguage('en')}
+                  className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-colors ${
+                    language === 'en'
+                      ? 'bg-white text-emerald-800 shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                  title="Switch to English"
+                >
+                  EN
+                </button>
+              </div>
+
+              {/* Role Switcher Button */}
+              <button
+                onClick={() => setIsRoleModalOpen(true)}
+                className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-slate-800 bg-slate-50 border border-slate-300 rounded-lg hover:bg-slate-100 hover:border-slate-400 transition-colors"
+                title="Switch active user or role"
+              >
+                <RoleIcon className="w-3.5 h-3.5 text-emerald-700" />
+                <span className="hidden sm:inline-block max-w-[130px] truncate font-medium">
+                  {currentUser.name.split(' ')[0]}
+                </span>
+                <span className="text-[11px] px-1.5 py-0.2 bg-emerald-100/70 text-emerald-800 rounded font-semibold whitespace-nowrap">
+                  {getRoleShortLabel(currentUser.role)}
+                </span>
+              </button>
+
+              {/* Main Portal Toggle Button */}
+              {activeTab === 'public' || activeTab === 'website' ? (
+                <button
+                  onClick={() => {
+                    if (currentUser.role === 'investor') {
+                      setActiveTab('investorPortal');
+                    } else {
+                      setActiveTab('dashboard');
+                    }
+                  }}
+                  className="px-3.5 py-2 text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 rounded-lg shadow-xs transition-colors whitespace-nowrap flex items-center gap-1.5"
+                >
+                  <span>{currentUser.role === 'investor' ? 'Investor Portal' : 'Farm Management'}</span>
+                  <span>→</span>
+                </button>
+              ) : (
+                <button
+                  onClick={() => setActiveTab('public')}
+                  className="hidden sm:flex px-3 py-1.5 text-xs font-medium text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 rounded-lg transition-colors items-center gap-1"
+                >
+                  <Globe className="w-3.5 h-3.5 text-slate-500" />
+                  <span>{t.publicSite}</span>
+                </button>
+              )}
+
+              {/* Quick Reset Demo Data Button */}
+              <button
+                onClick={() => {
+                  if (window.confirm('Reset all farm transactions and state back to fresh demo seed?')) {
+                    resetDb();
+                  }
+                }}
+                className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-md transition-colors"
+                title="Reset to fresh demo data"
+              >
+                <RefreshCw className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Demo banner indicator */}
+        <div className="bg-amber-50 border-t border-b border-amber-200/80 px-4 py-1 text-center text-[11px] text-amber-800 font-medium flex items-center justify-center gap-2">
+          <span className="inline-block w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+          <span>{t.demoDataNotice}</span>
+          <span className="text-amber-600 hidden md:inline">·</span>
+          <span className="hidden md:inline text-amber-700">
+            {language === 'bn' 
+              ? 'উপরে "রোল পরিবর্তন" বাটনে ক্লিক করে সুপার অ্যাডমিন, হিসাবরক্ষক অথবা বিনিয়োগকারী অ্যাকাউন্টে তাৎক্ষণিক সুইচ করুন।' 
+              : 'Click user badge above to switch between Super Admin, Accountant, Duck Manager, or Investors.'}
+          </span>
+        </div>
+      </header>
+
+      <RoleSwitcherModal
+        isOpen={isRoleModalOpen}
+        onClose={() => setIsRoleModalOpen(false)}
+      />
+    </>
+  );
+};

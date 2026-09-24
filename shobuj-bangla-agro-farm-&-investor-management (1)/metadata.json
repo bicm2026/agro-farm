@@ -1,0 +1,6 @@
+{
+  "name": "Shobuj Bangla Agro Farm & Investor Management",
+  "description": "Comprehensive multi-sector agro farm management, real-time financial accounting, investor transparency portal, and customizable operations platform for Bangladesh agriculture.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
