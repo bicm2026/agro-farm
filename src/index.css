@@ -1,11 +1,32 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Bornomala';
+  src: url('/fonts/Bornomala-Regular.ttf') format('truetype');
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bornomala';
+  src: url('/fonts/Bornomala-Bold.ttf') format('truetype');
+  font-weight: 600 700 800 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
   body {
-    font-family: 'Plus Jakarta Sans', 'Hind Siliguri', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Plus Jakarta Sans', 'Bornomala', 'Hind Siliguri', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     color: #0f172a;
     background-color: #f8fafc;
     -webkit-font-smoothing: antialiased;
+  }
+
+  /* Dedicated Bangla font class for elements */
+  .font-bangla {
+    font-family: 'Bornomala', 'Hind Siliguri', sans-serif;
   }
 
   /* Tabular figures for financial and numeric data */

@@ -715,21 +715,21 @@ export const PublicWebsite: React.FC = () => {
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg overflow-hidden bg-white p-0.5 flex items-center justify-center shrink-0">
                 <img
-                  src={APP_IMAGES.logo}
+                  src={APP_IMAGES.logoIcon || APP_IMAGES.logo}
                   alt="Ahmadun Agro Logo"
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-contain"
                   onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).src = APP_IMAGES.logoSvg;
+                    (e.currentTarget as HTMLImageElement).src = APP_IMAGES.logo;
                   }}
                 />
               </div>
               <div>
                 <span className="font-extrabold text-white text-sm block">
-                  Ahmadun Agro
+                  {db.settings?.farmName || 'Ahmadun Agro'}
                 </span>
                 <span className="text-[11px] text-emerald-400 font-semibold block leading-none">
-                  আহমাদুন এগ্রো
+                  {db.settings?.farmNameBn || 'আহমাদুন এগ্রো'}
                 </span>
               </div>
             </div>

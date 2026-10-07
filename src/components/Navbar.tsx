@@ -96,26 +96,28 @@ export const Navbar: React.FC<Props> = ({ onToggleSidebar, isSidebarOpen }) => {
               >
                 <div className="w-10 h-10 rounded-xl overflow-hidden bg-white shadow-xs border border-emerald-100 flex items-center justify-center shrink-0 group-hover:border-emerald-300 transition-colors">
                   <img
-                    src={APP_IMAGES.logo}
+                    src={APP_IMAGES.logoIcon || APP_IMAGES.logo}
                     alt="Ahmadun Agro Logo"
                     referrerPolicy="no-referrer"
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-contain p-0.5"
                     onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).src = APP_IMAGES.logoSvg;
+                      (e.currentTarget as HTMLImageElement).src = APP_IMAGES.logo;
                     }}
                   />
                 </div>
                 <div>
                   <div className="flex items-center gap-1.5">
                     <span className="text-base sm:text-lg font-black tracking-tight text-slate-900 group-hover:text-emerald-700 transition-colors">
-                      Ahmadun Agro
+                      {db.settings?.farmName || 'Ahmadun Agro'}
                     </span>
                     <span className="text-[11px] font-bold text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
-                      আহমাদুন এগ্রো
+                      {db.settings?.farmNameBn || 'আহমাদুন এগ্রো'}
                     </span>
                   </div>
                   <span className="hidden sm:block text-[11px] text-slate-500 font-medium leading-none mt-0.5">
-                    {language === 'bn' ? 'স্বচ্ছ আধুনিক বহুমুখী কৃষি ও বিনিয়োগ' : 'Smart Integrated Agro & Investment'}
+                    {language === 'bn' 
+                      ? (db.settings?.taglineBn || 'স্বচ্ছ আধুনিক বহুমুখী কৃষি ও বিনিয়োগ') 
+                      : (db.settings?.tagline || 'Smart Integrated Agro & Investment')}
                   </span>
                 </div>
               </button>

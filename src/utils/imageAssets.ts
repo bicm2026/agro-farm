@@ -11,10 +11,12 @@ import sectorVegetable from '../assets/images/sector_vegetable.jpg';
 import logoPng from '../assets/images/logo.png';
 import logoSvg from '../assets/images/logo.svg';
 import logoJpg from '../assets/images/logo.jpg';
+import logoIcon from '../assets/images/logo-icon.png';
 import ahmadunLogo from '../assets/images/ahmadun_agro_logo_1790255433507.jpg';
 
 export const APP_IMAGES = {
   logo: logoPng,
+  logoIcon: logoIcon,
   logoSvg: logoSvg,
   logoJpg: logoJpg,
   hero: heroAgroFarm,

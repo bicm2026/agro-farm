@@ -27,12 +27,12 @@ export const AhmadunLogo: React.FC<AhmadunLogoProps> = ({
     return (
       <div className={`relative shrink-0 rounded-xl overflow-hidden bg-white shadow-xs border border-emerald-100 flex items-center justify-center ${currentSize.icon} ${className}`}>
         <img
-          src={APP_IMAGES.logo}
+          src={APP_IMAGES.logoIcon || APP_IMAGES.logo}
           alt="Ahmadun Agro Logo"
           referrerPolicy="no-referrer"
           className="w-full h-full object-contain p-0.5"
           onError={(e) => {
-            (e.currentTarget as HTMLImageElement).src = APP_IMAGES.logoSvg;
+            (e.currentTarget as HTMLImageElement).src = APP_IMAGES.logo;
           }}
         />
       </div>
@@ -46,12 +46,12 @@ export const AhmadunLogo: React.FC<AhmadunLogoProps> = ({
       {/* Emblem / Logo Icon */}
       <div className={`relative shrink-0 rounded-xl overflow-hidden bg-white shadow-xs border ${isLight ? 'border-white/20' : 'border-emerald-100'} flex items-center justify-center ${currentSize.icon}`}>
         <img
-          src={APP_IMAGES.logo}
+          src={APP_IMAGES.logoIcon || APP_IMAGES.logo}
           alt="Ahmadun Agro Logo"
           referrerPolicy="no-referrer"
           className="w-full h-full object-contain p-0.5"
           onError={(e) => {
-            (e.currentTarget as HTMLImageElement).src = APP_IMAGES.logoSvg;
+            (e.currentTarget as HTMLImageElement).src = APP_IMAGES.logo;
           }}
         />
       </div>

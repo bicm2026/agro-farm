@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { resetDatabaseToDefault } from '../services/storage';
+import { APP_IMAGES } from '../utils/imageAssets';
 import { 
   Settings as SettingsIcon, 
   Building2, 
@@ -17,18 +18,35 @@ import {
 export const SettingsView: React.FC = () => {
   const { db, updateDb, logAudit, showToast, language, t } = useApp();
 
-  const [farmName, setFarmName] = useState(db.settings.farmName);
-  const [farmNameBn, setFarmNameBn] = useState(db.settings.farmNameBn);
-  const [address, setAddress] = useState(db.settings.address);
-  const [phone, setPhone] = useState(db.settings.phone);
-  const [email, setEmail] = useState(db.settings.email);
-  const [currency, setCurrency] = useState(db.settings.currency);
+  const [farmName, setFarmName] = useState(db.settings.farmName || 'Ahmadun Agro');
+  const [farmNameBn, setFarmNameBn] = useState(db.settings.farmNameBn || 'আহমাদুন এগ্রো');
+  const [address, setAddress] = useState(db.settings.address || db.settings.farmAddress || 'Chandra, Kaliakair, Gazipur & Gulshan-1, Dhaka');
+  const [phone, setPhone] = useState(db.settings.phone || db.settings.contactPhone || '+880 1711-000111');
+  const [email, setEmail] = useState(db.settings.email || db.settings.contactEmail || 'contact@ahmadunagro.com');
+  const [currency, setCurrency] = useState(db.settings.currency || 'BDT');
 
-  const [bkashMerchant, setBkashMerchant] = useState('01711-987654');
-  const [nagadMerchant, setNagadMerchant] = useState('01811-123456');
-  const [bankName, setBankName] = useState('Islami Bank Bangladesh PLC');
-  const [bankAccount, setBankAccount] = useState('2050 3481 9002 4412');
-  const [bankRouting, setBankRouting] = useState('125271890');
+  const [bkashMerchant, setBkashMerchant] = useState(db.settings.bkashMerchant || '01711-987654');
+  const [nagadMerchant, setNagadMerchant] = useState(db.settings.nagadMerchant || '01811-123456');
+  const [bankName, setBankName] = useState(db.settings.bankName || 'Islami Bank Bangladesh PLC');
+  const [bankAccount, setBankAccount] = useState(db.settings.bankAccount || '2050 3481 9002 4412');
+  const [bankRouting, setBankRouting] = useState(db.settings.bankRouting || '125271890');
+
+  // Keep state synced whenever db.settings is updated
+  React.useEffect(() => {
+    if (db.settings) {
+      setFarmName(db.settings.farmName || 'Ahmadun Agro');
+      setFarmNameBn(db.settings.farmNameBn || 'আহমাদুন এগ্রো');
+      setAddress(db.settings.address || db.settings.farmAddress || 'Chandra, Kaliakair, Gazipur & Gulshan-1, Dhaka');
+      setPhone(db.settings.phone || db.settings.contactPhone || '+880 1711-000111');
+      setEmail(db.settings.email || db.settings.contactEmail || 'contact@ahmadunagro.com');
+      setCurrency(db.settings.currency || 'BDT');
+      if (db.settings.bkashMerchant) setBkashMerchant(db.settings.bkashMerchant);
+      if (db.settings.nagadMerchant) setNagadMerchant(db.settings.nagadMerchant);
+      if (db.settings.bankName) setBankName(db.settings.bankName);
+      if (db.settings.bankAccount) setBankAccount(db.settings.bankAccount);
+      if (db.settings.bankRouting) setBankRouting(db.settings.bankRouting);
+    }
+  }, [db.settings]);
 
   const handleSaveGeneral = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,17 +54,39 @@ export const SettingsView: React.FC = () => {
       ...prev,
       settings: {
         ...prev.settings,
-        farmName,
-        farmNameBn,
-        address,
-        phone,
-        email,
+        farmName: farmName.trim(),
+        farmNameBn: farmNameBn.trim(),
+        address: address.trim(),
+        farmAddress: address.trim(),
+        phone: phone.trim(),
+        contactPhone: phone.trim(),
+        email: email.trim(),
+        contactEmail: email.trim(),
         currency,
+        currencySymbol: currency === 'USD' ? '$' : '৳',
       },
     }));
 
-    logAudit('UPDATE_SETTINGS', 'Updated Agro Farm institutional profile & contact details');
-    showToast('Farm institutional settings saved!');
+    logAudit('UPDATE_SETTINGS', `Updated Agro Farm institutional profile: ${farmName} / ${address}`);
+    showToast(language === 'bn' ? 'খামারের প্রাতিষ্ঠানিক তথ্য সফলভাবে সংরক্ষিত হয়েছে!' : 'Farm institutional settings saved!');
+  };
+
+  const handleSaveBanking = (e: React.FormEvent) => {
+    e.preventDefault();
+    updateDb((prev) => ({
+      ...prev,
+      settings: {
+        ...prev.settings,
+        bkashMerchant: bkashMerchant.trim(),
+        nagadMerchant: nagadMerchant.trim(),
+        bankName: bankName.trim(),
+        bankAccount: bankAccount.trim(),
+        bankRouting: bankRouting.trim(),
+      },
+    }));
+
+    logAudit('UPDATE_BANKING', `Updated banking & payment collection channels: ${bankName} (${bankAccount})`);
+    showToast(language === 'bn' ? 'ব্যাংক ও বিকাশ/নগদ পেমেন্ট চ্যানেল সফলভাবে সংরক্ষিত হয়েছে!' : 'Payment collection channels updated & saved!');
   };
 
   const handleBackupDownload = () => {
@@ -264,18 +304,47 @@ export const SettingsView: React.FC = () => {
             <div className="mt-4 pt-3 border-t border-slate-100 flex justify-end">
               <button
                 type="button"
-                onClick={() => showToast('Payment collection channels updated!')}
-                className="px-4 py-2 text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 rounded-lg shadow-xs"
+                onClick={handleSaveBanking}
+                className="px-4 py-2 text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 rounded-lg shadow-xs flex items-center gap-1.5 transition-colors"
               >
-                Save Banking Channels
+                <Save className="w-3.5 h-3.5" />
+                <span>Save Banking Channels</span>
               </button>
             </div>
           </div>
 
         </div>
 
-        {/* Right 1 Col: Backup & Restore */}
+        {/* Right 1 Col: Backup & Restore & Permanent Logo */}
         <div className="space-y-6">
+
+          {/* Official Permanent Logo Card */}
+          <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-4">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                <span>অফিসিয়াল লোগো (স্থায়ী প্রতীক)</span>
+              </h3>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
+                লক করা (Protected)
+              </span>
+            </div>
+
+            <div className="flex flex-col items-center justify-center p-5 bg-emerald-50/40 border border-emerald-100 rounded-xl text-center">
+              <div className="w-28 h-28 rounded-2xl bg-white p-2 shadow-xs border border-emerald-200/80 flex items-center justify-center mb-3">
+                <img
+                  src={APP_IMAGES.logo}
+                  alt="Ahmadun Agro Official Logo"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <h4 className="font-extrabold text-slate-900 text-base">Ahmadun Agro</h4>
+              <p className="font-bangla text-emerald-800 font-bold text-sm">আহমাদুন এগ্রো</p>
+              <p className="text-[11px] text-slate-600 mt-2 max-w-xs leading-relaxed">
+                এটি আপনার খামারের আসল স্থায়ী লোগো। সিস্টেমে এটি স্থায়ীভাবে সংরক্ষণ করা হয়েছে এবং কোনো সেটিংস পরিবর্তনের সময় এটি পরিবর্তন হবে না।
+              </p>
+            </div>
+          </div>
           
           <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-4">
             <h3 className="text-sm font-bold text-slate-900 pb-2 border-b border-slate-100">

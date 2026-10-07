@@ -71,7 +71,7 @@
 
   <!-- Bangla Text: আহমাদুন এগ্রো -->
   <text x="250" y="398" 
-        font-family="'Hind Siliguri', 'Noto Sans Bengali', system-ui, sans-serif" 
+        font-family="'Bornomala', 'Hind Siliguri', 'Noto Sans Bengali', system-ui, sans-serif" 
         font-size="36" 
         font-weight="700" 
         fill="#166534" 

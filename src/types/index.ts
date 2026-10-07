@@ -454,7 +454,9 @@ export interface FarmSettings {
   officeAddressBn?: string;
   bkashMerchant?: string;
   nagadMerchant?: string;
+  bankName?: string;
   bankAccount?: string;
+  bankRouting?: string;
   currency?: string;
   currencySymbol?: string;
   bnNumberFormat?: boolean;

@@ -102,9 +102,13 @@ export function loadDatabase(): AppDatabase {
         dashboardWidgets: widgetList,
         settings: parsed.settings 
           ? { 
+              ...initialSettings,
               ...parsed.settings, 
-              farmName: parsed.settings.farmName === 'Shobuj Bangla Integrated Agro Farm Ltd.' ? 'Ahmadun Agro' : parsed.settings.farmName || 'Ahmadun Agro',
-              farmNameBn: parsed.settings.farmNameBn === 'সবুজ বাংলা সমন্বিত এগ্রো ফার্ম লিমিটেড' ? 'আহমাদুন এগ্রো' : parsed.settings.farmNameBn || 'আহমাদুন এগ্রো',
+              farmName: parsed.settings.farmName === 'Shobuj Bangla Integrated Agro Farm Ltd.' ? 'Ahmadun Agro' : (parsed.settings.farmName || 'Ahmadun Agro'),
+              farmNameBn: parsed.settings.farmNameBn === 'সবুজ বাংলা সমন্বিত এগ্রো ফার্ম লিমিটেড' ? 'আহমাদুন এগ্রো' : (parsed.settings.farmNameBn || 'আহমাদুন এগ্রো'),
+              address: parsed.settings.address || parsed.settings.farmAddress || initialSettings.address,
+              phone: parsed.settings.phone || parsed.settings.contactPhone || initialSettings.phone,
+              email: parsed.settings.email || parsed.settings.contactEmail || initialSettings.email,
               logoText: 'AHMADUN AGRO'
             } 
           : initialSettings,
